@@ -1,3 +1,8 @@
 class AppEnv {
-  static String baseUrl = "localhost:3000";
+  final String baseUrl;
+
+  AppEnv({
+    required this.baseUrl,
+  });
+
 }

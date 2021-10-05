@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test1/constants/ennviroment.dart';
 import 'package:test1/constants/theme.dart';
-import 'package:test1/models/topic.dart';
-import 'package:test1/request/request.dart';
-
+import 'package:test1/core/routing/routing_manager.dart';
+import 'package:test1/data/models/topic.dart';
+import 'package:test1/data/services/networking/api_provider.dart';
+import 'package:test1/data/services/networking/topic_service.dart';
 import 'components/topic.dart';
-
-class CounterCubit extends Cubit<int> {
-  final int init;
-  CounterCubit({required this.init}) : super(init);
-
-  void increment() => emit(state + 1);
-
-  void reset() => emit(init);
-}
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -24,16 +16,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<TopicModel> topics = [];
-  final cubit = CounterCubit(init: 10);
+  final topicService = TopicService(
+      apiProvider: ApiProvider(appEnv: AppEnv(baseUrl: "http://localhost:3000")));
 
   @override
   void initState() {
     super.initState();
-    getTopic().then((value) => setState(() {
-          topics = value;
-        }));
-    cubit.close();  
-    print(cubit.isClosed);
+    topicService.getListTopic().then((res) {}).catchError((onError) {});
   }
 
   @override
@@ -90,10 +79,17 @@ class _HomeState extends State<Home> {
               crossAxisCount: 2,
               children: <Widget>[
                 ...topics.map((e) => Topic(id: e.id, name: e.name)).toList(),
-                const Topic(
-                  id: "0",
-                  name: "add",
-                  isAdd: true,
+                GestureDetector(
+                  onTap: () {
+                    RoutingManager()
+                        .showModalStackDialog(RoutingPageType.newTopic());
+                    // Navigator.pushNamed(context, Routes.newTopic);
+                  },
+                  child: const Topic(
+                    id: "0",
+                    name: "add",
+                    isAdd: true,
+                  ),
                 ),
               ],
             ),

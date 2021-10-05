@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 class Topic extends StatelessWidget {
-  const Topic({Key? key, required this.id, required this.name, this.isAdd = false}) : super(key: key);
+  const Topic(
+      {Key? key, required this.id, required this.name, this.isAdd = false})
+      : super(key: key);
 
   final bool isAdd;
   final String id;
@@ -68,20 +69,14 @@ class Topic extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
+            children: const [
+              Text(
                 "3 of 4",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w600),
               ),
-              CircularPercentIndicator(
-                radius: 30.0,
-                lineWidth: 3.0,
-                percent: 0.7,
-                progressColor: Colors.white,
-              )
             ],
           )
         ]);
