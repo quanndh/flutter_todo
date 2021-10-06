@@ -12,6 +12,14 @@ class AppColors {
     "0xffF1C40F",
     "0xffD35400",
     "0xff884EA0",
-    "0xffFFA07A"
+    "0xffFFA07A",
+    "0xffCB4335",
+    "0xffE59866",
+    "0xff21618C",
+    "0xffAF7AC5",
+    "0xffA3E4D7",
+    "0xffF5B041",
+    "0xff717D7E",
+    "0xff34495E"
   ];
 }

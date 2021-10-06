@@ -17,7 +17,7 @@ extension Curl on RequestOptions {
 
     var data = json.encode(this.data);
     if (data != '{}') {
-      data = data.replaceAll('"', '\\"');
+      // data = data.replaceAll('"', '\\"');
       components.add('-d "$data"');
     }
 
@@ -32,14 +32,14 @@ extension ResponseCurl on Response {
     components.add('Status: $statusCode');
 
     headers.forEach((k, v) {
-      if (k != 'Cookie') {
+      if (k == 'content-type' || k == "authorization") {
         components.add('-H "$k: $v"');
       }
     });
 
     var data = json.encode(this.data);
-    data = data.replaceAll('"', '\\"');
-    components.add('-d "$data"');
+    // data = data.replaceAll('"', '\\"');
+    components.add('-d $data');
 
     return components.join('\\\n\t');
   }

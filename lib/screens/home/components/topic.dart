@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 class Topic extends StatelessWidget {
   const Topic(
-      {Key? key, required this.id, required this.name, this.isAdd = false})
+      {Key? key, required this.id, required this.name, required this.color, this.isAdd = false})
       : super(key: key);
 
   final bool isAdd;
   final String id;
   final String name;
+  final String color;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,9 @@ class Topic extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10)));
     }
 
-    return const BoxDecoration(
-        color: Colors.green,
-        borderRadius: BorderRadius.all(Radius.circular(10)));
+    return BoxDecoration(
+        color: Color(int.parse(color)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)));
   }
 
   Column buildContent(String name, bool isAdd, BuildContext context) {

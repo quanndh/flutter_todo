@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:test1/core/routing/routes.dart';
+import 'package:test1/data/models/topic.dart';
 import 'package:test1/screens/home/home.dart';
 import 'package:test1/screens/newTopic/newTopic.dart';
 
@@ -10,7 +11,9 @@ class RoutingPageType<T> {
 
   RoutingPageType.root() : routeName = Routes.root;
   RoutingPageType.home() : routeName = Routes.home;
-  RoutingPageType.newTopic() : routeName = Routes.newTopic;
+  RoutingPageType.newTopic({required Function(TopicModel) addNewTopic})
+      : routeName = Routes.newTopic,
+        args = addNewTopic;
 }
 
 class RoutingManager {
@@ -25,7 +28,6 @@ class RoutingManager {
       case Routes.home:
         return MaterialWithModalsPageRoute(
             settings: settings, builder: (_) => const Home());
-
     }
     return MaterialPageRoute(
       builder: (context) {
@@ -44,7 +46,7 @@ class RoutingManager {
           context: rootContext,
           expand: true,
           backgroundColor: Colors.transparent,
-          builder: (context) => const NewTopic(),
+          builder: (context) => NewTopic(addNewTopic: routingPageType.args as Function(TopicModel newTopic),),
         );
       default:
         break;

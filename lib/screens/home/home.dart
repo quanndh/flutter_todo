@@ -17,12 +17,26 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<TopicModel> topics = [];
   final topicService = TopicService(
-      apiProvider: ApiProvider(appEnv: AppEnv(baseUrl: "http://localhost:3000")));
+      apiProvider:
+          ApiProvider(appEnv: AppEnv(baseUrl: "http://localhost:3000")));
 
   @override
   void initState() {
     super.initState();
-    topicService.getListTopic().then((res) {}).catchError((onError) {});
+    getTopicData();
+  }
+
+  getTopicData() async {
+    var topicData = await topicService.getListTopic();
+    setState(() {
+      topics = topicData!.data!;
+    });
+  }
+
+  void handleAddNewTopic(TopicModel newTopic) {
+    setState(() {
+      topics = [...topics, newTopic];
+    });
   }
 
   @override
@@ -78,17 +92,25 @@ class _HomeState extends State<Home> {
               mainAxisSpacing: 16,
               crossAxisCount: 2,
               children: <Widget>[
-                ...topics.map((e) => Topic(id: e.id, name: e.name)).toList(),
+                ...topics
+                    .map((e) => Topic(
+                          id: e.id,
+                          name: e.name,
+                          color: e.color,
+                        ))
+                    .toList(),
                 GestureDetector(
                   onTap: () {
-                    RoutingManager()
-                        .showModalStackDialog(RoutingPageType.newTopic());
+                    RoutingManager().showModalStackDialog(
+                        RoutingPageType.newTopic(
+                            addNewTopic: handleAddNewTopic));
                     // Navigator.pushNamed(context, Routes.newTopic);
                   },
                   child: const Topic(
                     id: "0",
                     name: "add",
                     isAdd: true,
+                    color: "color",
                   ),
                 ),
               ],

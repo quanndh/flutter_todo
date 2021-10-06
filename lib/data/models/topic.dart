@@ -8,10 +8,10 @@ part 'topic.g.dart';
 class TopicModel {
   String id;
   String name;
+  String color;
 
-  TopicModel({required this.id, required this.name});
+  TopicModel({required this.id, required this.name, required this.color});
 
   factory TopicModel.fromJson(Map<String, dynamic> json) =>
       _$TopicModelFromJson(json);
-
 }
